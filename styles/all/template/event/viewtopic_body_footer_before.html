@@ -1,0 +1,36 @@
+{% INCLUDECSS '@nekstati_autocut/autocut.css' %}
+
+<script>
+{
+	let posts = document.querySelectorAll('.postbody .content');
+	for (let div of posts) {
+		div.parentNode.classList.toggle('overflowed', div.scrollHeight > div.offsetHeight);
+	}
+
+	let expanders = document.querySelectorAll('.postbody .expander');
+	for (let exp of expanders) {
+		exp.addEventListener('click', () => {
+			let content = exp.parentNode.querySelector('.content');
+			if (!content) return;
+			content.style.maxHeight = 'none';
+			exp.parentNode.classList.remove('overflowed');
+		});
+	}
+
+	window.addEventListener('resize', resizeThrottler, false);
+	let resizeTimeout = null;
+	function resizeThrottler() {
+		if (!resizeTimeout) {
+			resizeTimeout = setTimeout(() => {
+				resizeTimeout = null;
+				actualResizeHandler();
+			}, 250);
+		}
+	}
+	function actualResizeHandler() {
+		for (let div of posts) {
+			div.parentNode.classList.toggle('overflowed', div.scrollHeight > div.offsetHeight);
+		}
+	}
+}
+</script>

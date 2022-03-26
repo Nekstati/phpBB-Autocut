@@ -1,0 +1,5 @@
+services:
+    nekstati.autocut.subscriber:
+        class: nekstati\autocut\event\subscriber
+        tags:
+            - { name: event.listener }
